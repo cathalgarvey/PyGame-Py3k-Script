@@ -1,0 +1,62 @@
+#!/bin/bash
+# Install dependencies for pygame, auto-build, convert and install for python 3.1+.
+# Thanks to @pauricthelodger for his help
+# Makes liberal use of the guide at:
+# https://sites.google.com/site/cslappe1/knowledge-base-and-how-to-s/installpython31andpygame191inubuntu
+
+echo "Installing Python3.2, Dev tools, Mercurial and PyGame Dependencies..."
+sudo apt-get install \
+build-essential \
+cmake \
+\gcc \
+g++ \
+python3.2 \
+python3.2-dev \
+python3-setuptools \
+mercurial \
+debhelper \
+html2text \
+libexpat1-dev \
+libmail-sendmail-perl \
+libmikmod2-dev \
+libogg-dev \
+libsdl-mixer1.2-dev \
+libsys-hostname-long-perl \
+libvorbis-dev \
+po-debconf \
+quilt \
+sharutils \
+sdlbrt \
+libsdl1.2-dev \
+libsdl-ttf2.0-dev \
+libsdl-image1.2-dev \
+libsmpeg-dev \
+libportmidi-dev \
+libsdl-net1.2 \
+libavformat52 \
+libavformat-dev \
+libavcodec52 \
+libswscale0 \
+libswscale-dev \
+libfreetype6-dev \
+ttf-dejavu \
+msttcorefonts
+
+echo "Downloading latest revision of pygame with Mercurial..."
+hg clone https://bitbucket.org/pygame/pygame
+
+echo "Entering PyGame Directory.."
+cd pygame
+echo "Running config.py with python3.."
+python3 config.py
+echo "Running 2to3 on setup.py.."
+2to3 setup.py -w
+echo "Using python3 to build pygame.."
+python3 setup.py build
+echo "Using python3 to install pygame.."
+sudo python3 setup.py \install
+echo "Install complete."
+echo "Leaving build directory to avoid import errors in python."
+cd ..
+echo "Enjoy PyGame3k!"
+
